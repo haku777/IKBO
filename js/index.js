@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function validar(x){
         let seleccion_jugador = x;
 
-        // jugador selecciono papel y casa tambien
+        // jugador selecciono papel y casa papel
         if (seleccion_jugador == 1 && num < 2){
             console.log("empate");
         
@@ -111,10 +111,44 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (seleccion_jugador == 1 && num > 2){
                     console.log("usuario gana con papel");
                     score.innerHTML = parseInt(score.innerHTML) + 1;
+                }else{
+                    // usuario selecciono tijeras y casa papel
+                    if(seleccion_jugador == 2 && num < 2){
+                        console.log("usuario gana con tijeras");
+                        score.innerHTML = parseInt(score.innerHTML) + 1;
+                }else{
+                     // usuario selecciono tijeras y casa tijeras
+                     if(seleccion_jugador == 2 && num == 2){
+                        console.log("empate");
+                    }else{
+                        // usuario selecciono tijeras y casa piedra
+                        if(seleccion_jugador == 2 && num > 2){
+                            console.log("usuario pierde contra piedra");
+                            score.innerHTML = 0;
+                        }else{
+                              // usuario selecciono piedra y casa papel
+                                if(seleccion_jugador == 3 && num < 2){
+                                    console.log("usuario pierde contra papel");
+                                    score.innerHTML = 0;
+                                }else{
+                                    // usuario selecciono piedra y casa tijeras
+                                    if(seleccion_jugador == 3 && num == 2){
+                                        console.log("usuario gana con piedra");
+                                        score.innerHTML = parseInt(score.innerHTML) + 1;
+                                    }else{
+                                        // usuario selecciono piedra y casa piedra
+                                        if(seleccion_jugador == 3 && num == 2){
+                                            console.log("empate");
+                                        }   
+                                    }   
+                                }
+                        }
+                    }
                 }
             }
-
+            }
         }
+    
     }
 
 
