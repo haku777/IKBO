@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     let score = document.getElementById('score');
-    score.innerHTML = 99;
+    score.innerHTML = 0;
 
     let papper = document.getElementById('paper');
     let scissors = document.getElementById('scissors');
@@ -9,23 +9,38 @@ document.addEventListener("DOMContentLoaded", function() {
     let house = document.getElementById('house');
     let again = document.getElementById('again');
 
+    let rules = document.getElementById('rules');
+
+    let ruleson = document.getElementById('ruleson');
+    let close = document.getElementById('close');
+    
+    let seleccion_jugador;
 
     papper.addEventListener('click',function(){
         scissors.style.display = "none";
         rock.style.display = "none";
         house.style.display = "flex";
+        seleccion_jugador = 1;
+        jugar();
+        validar(seleccion_jugador);
     });
-
+    
     scissors.addEventListener('click',function(){
         papper.style.display = "none";
         rock.style.display = "none";
         house.style.display = "flex";
+        seleccion_jugador = 2;
+        jugar();
+        validar(seleccion_jugador);
     });
-
+    
     rock.addEventListener('click',function(){
         papper.style.display = "none";
         scissors.style.display = "none";
         house.style.display = "flex";
+        seleccion_jugador = 3;
+        jugar();
+        validar(seleccion_jugador);
     });
     
     // reseteamos los valores del valor final
@@ -34,34 +49,84 @@ document.addEventListener("DOMContentLoaded", function() {
         rock.style.display = "flex";
         papper.style.display = "flex";
         house.style.display = "none";
+        guardarProgreso();
     });
 
-// -------- ahora programamos la eleccion de casa -----------------
+    // cerrar popup
+    rules.addEventListener('click',function(){
+        ruleson.style.display = "flex";
+    });
+
+    // cerrar popup
+    close.addEventListener('click',function(){
+        ruleson.style.display = "none";
+    });
+
+
+    // -------- ahora programamos la eleccion de casa -----------------
+    let num;
+
+    function jugar(){
+        num = Math.random(1);
+        num = num * 10;
+        //num = Math.ceil(num)  //me retorna el valor mas cernano superior
+        //num = Math.floor(num) //me retorna el valor mas cercano a inferior
+        num = Math.round(num); //me retorna el valor redondeado
+        num = parseInt(num);
+        console.log(num);
     
-    let num = Math.random(1)
-    num = num * 10
-    //num = Math.ceil(num)  //me retorna el valor mas cernano superior
-    //num = Math.floor(num) //me retorna el valor mas cercano a inferior
-    num = Math.round(num) //me retorna el valor redondeado
-    num = parseInt(num)
-    console.log(num)
-
-    let eleccion_house;
-
-    if(num < 2){
-        house.innerHTML = `<img src="images/icon-paper.svg" alt=""></img>`
-        house.style.border = "40px solid dodgerblue"
-    }else{
-        if(num == 2){
-            house.innerHTML = `<img src="images/icon-scissors.svg" alt=""></img>`
-            house.style.border = "40px solid orange"
+        if(num < 2){
+            house.innerHTML = `<img src="images/icon-paper.svg" alt=""></img>`;
+            house.style.border = "40px solid dodgerblue";
         }else{
-            house.innerHTML = `<img src="images/icon-rock.svg" alt=""></img>`
-            house.style.border = "40px solid crimson"
+            if(num == 2){
+                house.innerHTML = `<img src="images/icon-scissors.svg" alt=""></img>`;
+                house.style.border = "40px solid orange";
+            }else{
+                house.innerHTML = `<img src="images/icon-rock.svg" alt=""></img>`;
+                house.style.border = "40px solid crimson";
+            }
         }
     }
 
-// ahora guardamos el progreso
+
+
+    // validamos la jugada
+
+    function validar(x){
+        let seleccion_jugador = x;
+
+        // jugador selecciono papel y casa tambien
+        if (seleccion_jugador == 1 && num < 2){
+            console.log("empate");
+        
+        }else{
+            
+            // jugador selecciono papel y casa tijeras
+                if (seleccion_jugador == 1 && num == 2){
+                    console.log("usuario pierde contra tijeras");
+                    score.innerHTML = 0;
+        }else{
+                // jugador selecciono papel y casa piedra
+                if (seleccion_jugador == 1 && num > 2){
+                    console.log("usuario gana con papel");
+                    score.innerHTML = parseInt(score.innerHTML) + 1;
+                }
+            }
+
+        }
+    }
+
+
+    // ahora guardamos el progreso
+
+    function guardarProgreso() {
+        document.cookie = score.innerHTML;
+    }
+
+
+
+
 
 
 });
